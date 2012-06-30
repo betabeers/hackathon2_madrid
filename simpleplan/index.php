@@ -16,7 +16,7 @@ function getDeal($category_id){
 }
 
 $deal_copas = getDeal( 3 );
-$deal_fun = getDeal( 50,52 );
+$deal_fun = getDeal( '50,52' );
 $deal_restaurante = getDeal( 2 );
 
 
