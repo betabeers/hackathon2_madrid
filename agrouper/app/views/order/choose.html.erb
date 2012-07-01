@@ -1,0 +1,68 @@
+<% if params[:ajax] != "1" %>
+<div id="content-ajax">
+<% end %>
+
+<h1>Haz tu pedido, <%= @user.username %></h1>
+<hr><%= @user.get_count %> productos en tu pedido:</hr>
+<table class="table table-striped table-bordered"><thead><tr><th>Cantidad</th><th>Producto</th><th>Precio</th></tr>
+			<% @user.items.each { |i|%> 
+			<tr>
+				<td><a href="<%= url_for :action => :add, :id => @order.id, :product_id => i.product.id, :quantity => 1, :only_path => false %>">
+					<i class="icon-plus"></i>
+				</a> <%= i.quantity %> <a href="<%= url_for :action => :add, :id => @order.id, :product_id => i.product.id, :quantity => -1, :only_path => false %>"><i class="icon-minus"></i></a>
+				</td>
+				<td><%= i.product.title %></td>
+				<td><%= i.get_total %>€</td>
+			<tr>
+			<% }%>
+			</tr>
+			<tr><th colspan=2>Tu total:</th><th><%= @user.get_total %>€</th></tr>
+			<tr><th colspan=2>Descuento del <%= discount = @user.order.calculate_order_discount; (discount * 100).round(2) %>%:</th><th><%= (@user.get_total * (discount)).round(2) %>€</th></tr>
+			<tr><th colspan=2>Tu total con descuento:</th><th><%= (@user.get_total * (1-discount)).round(2) %>€</b></th></tr>
+			</table>
+<br><%
+@discount_id = @user.order.get_next_discount
+%>
+<% if @discount_id[:next] == :max %>
+Ya has conseguido el mayor descuento, de un <b><%= (discount*100).round(2) %>%!</b>
+<% else %>
+<h3>Siguiente descuento:</h3>
+Para conseguir un <b><%= (@discount_id[:next][:percentage]*100) %>%</b> de descuento:<ul>
+<% if @discount_id[:remaining_people] > 0 %>
+<li>Consigue que se apunte<% if @discount_id[:remaining_people] != 1 %>n<% end %> <b><%= @discount_id[:remaining_people] %></b> amigo<% if @discount_id[:remaining_people] != 1 %>s<% end %> más</li>
+<% end %>
+
+<% if @discount_id[:remaining_money] > 0 %>
+<li>Gasta <b><%= @discount_id[:remaining_money] %></b>€ más</li>
+<% end %>
+</ul>
+<% end %>
+<hr>
+<h1>Añadir más productos:</h1>
+<% @order.offer.products.each_with_index do |product,idx| %>
+<% if idx%2 == 0 %>
+<div class="row">
+<% end %>
+<div class="well span5">
+	<h2><a href="<%= url_for :action => :add, :id => @order.id, :product_id => product.id, :quantity => 1, :only_path => false %>"><%= product.title %> - de <%= product.price %>€ a <%= ((product.price)*(1-@order.offer.get_discounts.last[:percentage])).round(2) %>€</a></h2><%= product.description %></div>
+<% if idx%2 == 1 %>
+</div>
+<% end %>
+<% end %>
+
+
+<% if params[:ajax] != "1" %>
+</div>
+<script>
+	function reloadAjax() {
+		$.ajax(document.location+"?ajax=1")
+			.done(function(a) {
+				$('#content-ajax').html(a);
+				setTimeout(reloadAjax, 2000);
+			})
+	}
+	$(function() {
+		setTimeout(reloadAjax, 2000);
+	})
+</script>
+<% end %>

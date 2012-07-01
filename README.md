@@ -23,3 +23,9 @@ Temática: ocio y descuentos, patrocinan yunait y mailjet.
 
 * Descripción: Planes aleatorios.
 * Autores: Miquel Camps Orteza
+
+## Agrouper
+
+* Descripción: Aplicación web movil para compras en grupo (con descuentos especiales) y partición del pago.
+* Estado: Está a medio desarrollar, para ser funcional falta pasarela de pago y panel de administración. Y mucha más limpieza ;)
+* Autores: @iamzenitraM , @Choms y @Erpheus.

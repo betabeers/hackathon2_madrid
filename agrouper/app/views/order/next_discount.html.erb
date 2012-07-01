@@ -1,0 +1,15 @@
+<% @discount_id = @order.get_next_discount %>
+<% if @discount_id[:next] == :max %>
+	Ya has conseguido el mayor descuento, de un <b><%= (@order.offer.get_discounts.last[:percentage]*100).round(2) %>%!</b>
+<% else %>
+	<h3>Siguiente descuento:</h3>
+	Para conseguir un <b><%= (@discount_id[:next][:percentage]*100) %>%</b> de descuento:<ul>
+		<% if @discount_id[:remaining_people] > 0 %>
+			<li>Consigue que se apunte<% if @discount_id[:remaining_people] != 1 %>n<% end %> <b><%= @discount_id[:remaining_people] %></b> amigo<% if @discount_id[:remaining_people] != 1 %>s<% end %> más</li>
+		<% end %>
+
+		<% if @discount_id[:remaining_money] > 0 %>
+		<li>Gasta <b><%= @discount_id[:remaining_money] %></b>€ más</li>
+		<% end %>
+	</ul>
+<% end %>

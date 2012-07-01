@@ -1,0 +1,6 @@
+<h1>Únete al pedido!</h1>
+<p>Pon tu nombre o nick:</p>
+<%= form_for :user do |f| %>
+<%= f.text_field :username %><br />
+  <%= f.submit "Entrar!" %>
+<% end %>

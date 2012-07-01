@@ -1,0 +1,44 @@
+<ul>
+	<% @order.users.each { |u| %>
+		<li>
+			<div class="well white-well">
+				<div style="width: 80%; float:left;">
+					<b><%= u.username %></b>
+				</div>
+				<div class="" style="float:left; margin-top: 5px; width: 10%">
+					<b><%= (u.get_total * (1-@order.calculate_order_discount)).round(2)  %> €</b>
+				</div>
+				<div class="clear"></div>
+				<ul>
+					<hr>
+					<% u.items.each { |i|%> 
+						<li>
+							<div style="width: 70%; float: left;">
+								<%= i.product.title %>
+							</div>
+							<div style="width: 10%; float: left;">
+								<%= i.product.price %>€ 
+							</div >
+							<div style="width: 10%; float: left;">
+								<%= i.quantity %>
+							</div>
+							<div style="width: 10%; float: left;">
+								<%= i.get_total %>€
+							</div>
+							<div class="clear"></div>
+						</li>
+						<hr>
+					<% }%>
+					<li>
+							<div style="width: 90%; float: left;">
+								<b>Descuento</b>
+							</div>
+							<div style="width: 10%; float: left;">
+								<b>-<%= (u.get_total * (@order.calculate_order_discount)).round(2) %>€</b>
+							</div>
+					</li>
+				</ul>
+			</div>
+		</li>
+	<% } %>
+</ul>
