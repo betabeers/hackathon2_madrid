@@ -13,6 +13,12 @@ Temática: ocio y descuentos, patrocinan yunait y mailjet.
 * Estado: Es un concepto no es una app terminada.
 * Autores: Miquel Camps Orteza
 
+## Recoupon
+
+* Descripción: App de facebook de recordatorios de cumpleaños con aviso por email de ofertas de yunait.
+* Estado: Es un concepto no es una app terminada.
+* Autores: Jose Manuel Robles, Sergio del Amo Caballero, Vaibhav Puri
+
 ## Simpleplan
 
 * Descripción: Planes aleatorios.
