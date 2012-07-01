@@ -1,0 +1,7 @@
+Configure your mailjet and yuanit credentials at the botton of grails-app/conf/Config.groovy
+
+By default the application will call the Yunait API and populate the database. 
+This can takes a long time. Maybe hours. So do it once, stop the application and comment the database population in 
+grails-app/conf/BootStrap.groovy
+
+In production, you could implement a quartz job which updates the database during the night or something similar. 
