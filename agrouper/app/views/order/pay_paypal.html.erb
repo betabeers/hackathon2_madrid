@@ -1,0 +1,1 @@
+<h1>Pagar <%= (@user.get_total * (1-@order.calculate_order_discount)).round(2)  %>€ por PayPal</h1>
