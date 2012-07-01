@@ -1,0 +1,49 @@
+<header id="title">
+	<img src='<%= image_path "logo.png" %>' height="60px" style="float:left;position:relative;bottom:10px;">
+	<h1>Agrouper</h1>
+</header>
+<section id="offers">
+	<% @offers.each_with_index { |offer, index| %>
+
+		<% if index%2 == 0 %>
+
+			<div class="row">
+
+		<% end %>
+
+		<div class="span6">
+
+			<div class="well">
+
+				<div class="row">
+
+					<div class="offer-title-container pagination-left">
+
+						<h2 class="offer-title"><%= offer.title %></h2>
+					</div>
+
+					<div class="offer-btn-container pagination-right">
+
+						<a class="btn btn-primary btn-large" href="<%= url_for :controller => :order, :action => :new, :id => offer.id %>">
+
+							Crear
+
+						</a>
+
+					</div>
+
+					<div class="clear"></div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<% if index%2 != 0 %>
+
+			</div>
+
+		<% end }%>
+
+</section>

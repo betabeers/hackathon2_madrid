@@ -1,0 +1,126 @@
+
+<header id="title">
+	<h1>Oferta: <%= @order.offer.title %></h1>
+</header>
+<section>
+	<div class="row show-grid">
+		<div class="span4 pagination-centered">
+			<div class="well">
+				<h2>Apúntate</h2><br>
+				<img src="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=<%= url_for :action => :join, :id => @order.id, :only_path => false %>"><br>
+				<div class="friendly-url">
+					<div class="well">
+						<%= url_for :action => :join, :id => @order.id, :only_path => false %>
+					</div>
+				</div>
+				<div class="">
+					<div class="well">
+						<form id="mail-invite-form" onSubmit="sendMail();return false;">
+							Invita por email: <input type="text" id="mail-field"></input>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="span8">
+			<div class="row">
+				<div class="span5">
+					<div style="float:left">0%&nbsp;</div>
+					<div class="progress progress-striped progress-success active" style="width:80%; float:left;">
+				    	<div class="bar" id="discount-bar" style="width: <%= @order.calculate_order_discount*100 / @order.offer.get_discounts.last[:percentage] %>%;"></div>
+				    </div>
+				    <div style="float:left">
+				    	&nbsp;<%= @order.offer.get_discounts.last[:percentage]*100 %>%
+				    </div>
+				    <div class="clear"></div>
+				    <div id="next-discount">
+				    	<%= render :template => "order/next_discount" %>
+					</div>
+				</div>
+				<div class="span3 pagination-right">
+					<div class="btn-group" style="float:right;">
+						<a class="btn btn-success btn-large" href="<%= url_for :controller => :order, :action => :checkout, :id => @order.id %>">Terminar pedido</a>
+						<a class="btn btn-success btn-large" id="final-price"> <%= @order.get_total %> €</a>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 20px">
+				<div class="span8">
+					<div class="well" id="updated_list">
+						<%= render :template => "order/updated_list" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+
+function updateList(){
+
+	$.ajax({
+  		url: "<%= url_for :controller => :order, :action => :updated_list, :id => @order.id %>",
+  		error: function(){ setTimeout(updateList,2000); }
+		}).done(function(a) { 
+  			$("#updated_list").html(a);
+  			setTimeout(updateList,2000);
+		});
+
+}
+
+function updatePrice(){
+
+	$.ajax({
+  		url: "<%= url_for :controller => :order, :action => :updated_price, :id => @order.id %>",
+  		error: function(){setTimeout(updatePrice,2000);}
+		}).done(function(a) {
+			var price = a.split("/")[0] + " €";
+			var percentage = a.split("/")[1] + "%";
+			$("#final-price").html(price);
+			$("#discount-bar").animate({
+				width: percentage
+			})
+  			setTimeout(updatePrice,2000);
+		});
+
+}
+
+function updateDiscount(){
+
+	$.ajax({
+  		url: "<%= url_for :controller => :order, :action => :next_discount, :id => @order.id %>",
+  		error: function(){setTimeout(updateDiscount,2000);}
+		}).done(function(a) { 
+  			$("#next-discount").html(a);
+  			setTimeout(updateDiscount,2000);
+		});
+}
+
+function sendMail(){
+
+	var parameters = "mail=" + $("#mail-field").val() ;
+
+	$.ajax({
+		url: "<%= url_for :controller => :order, :action => :invite, :id => @order.id %>",
+		data: parameters 
+	})
+
+	$("#mail-field").val("mensaje enviado");
+
+	setTimeout(resetMail,500);
+
+	return false;
+}
+
+function resetMail(){
+
+	$("#mail-field").val("");
+}
+
+setTimeout(updateList,2000);
+setTimeout(updatePrice,2000);
+setTimeout(updateDiscount,2000);
+
+</script>
