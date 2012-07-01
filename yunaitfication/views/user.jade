@@ -1,0 +1,21 @@
+h1 Hello #{name}
+h2 #{mail}
+a(href="mailto:#{mail}?Subject=subject&Body=<h1>Visita este enlace para ver los logros del usuario: #{name}</h1><a href='http://hackaya.com:8080/profile/michaelfields'>Michael Fields</a>", target="_blank")
+	img(src="#{image}", style="width:300px;")
+h1 Your level is #{level}
+h3 Search another user
+form(action='../', method='POST')
+	input(type="text", name="user", placeholder="Username", required)
+	span &nbsp;
+	button(class='inset blue')
+		span(class="icon medium grey", data-icon="<")
+		span Username
+	div(style="padding: 4px;")
+	h1 This User have unlocked this thropys :P
+if thropy
+	each thropys in thropy
+		img(src="http://hackaya.com:8080/oro.png")
+		span(style="font-size: 44px;")=thropys
+		br
+else
+	h3 This user haven't unlocked any thropy
