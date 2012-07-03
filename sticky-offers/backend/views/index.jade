@@ -1,0 +1,22 @@
+!!! 5
+html
+  head
+    title 
+    script(src="/javascripts/jquery-1.7.2.min.js")
+    script(src="/javascripts/view.index.js")
+  body
+    #container.hero-unit
+      #header
+        h1 Nuevo descuento
+      form.well.form-search(action='/newdiscount', method='post')
+        h2 Codigo de descuento:
+        input.input-large.search-query(name='newdiscount', type='text', value='')
+        button.btn.btn-danger(type='submit') Enviar
+      h3 Descuentos:
+      ul#discounts
+        each discount in discounts
+          li()
+            h4
+              a(href='#') #{discount}
+      label(id='discountname')
+      div(id='image')
