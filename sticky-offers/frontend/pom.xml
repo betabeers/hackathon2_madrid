@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.stickyoffers</groupId>
+	<artifactId>android</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>apk</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <android-plugin.version>3.2.0</android-plugin.version>
+        <compiler-plugin.version>2.5.1</compiler-plugin.version>
+
+        <android.version>2.3.3</android.version>
+        <android.sdk.platform>10</android.sdk.platform>
+        <android.device>usb</android.device>
+
+        <commons-lang.version>3.1</commons-lang.version>
+        <spring-android.version>1.0.0.RELEASE</spring-android.version>
+        <gson.version>2.2.1</gson.version>
+        <roboguice.version>2.0</roboguice.version>
+        <zxing.version>2.0</zxing.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>${android-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <jvmArguments>
+                        <argument>-Xms256m</argument>
+                        <argument>-Xmx512m</argument>
+                    </jvmArguments>
+                    <androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
+                    <assetsDirectory>${project.basedir}/assets</assetsDirectory>
+                    <resourceDirectory>${project.basedir}/res</resourceDirectory>
+                    <nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory>
+                    <sdk>
+                        <platform>${android.sdk.platform}</platform>
+                    </sdk>
+                    <deleteConflictingFiles>true</deleteConflictingFiles>
+                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>${android.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.roboguice</groupId>
+            <artifactId>roboguice</artifactId>
+            <version>${roboguice.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.android</groupId>
+            <artifactId>spring-android-rest-template</artifactId>
+            <version>${spring-android.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>android-integration</artifactId>
+            <version>${zxing.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.android</groupId>
+                    <artifactId>android</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.android</groupId>
+                    <artifactId>support</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>support-v4</artifactId>
+            <type>jar</type>
+            <version>r7</version>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+            <properties>
+                <rt.jar.path>${java.home}/jre/lib/rt.jar</rt.jar.path>
+                <jsse.jar.path>${java.home}/jre/lib/jsse.jar</jsse.jar.path>
+            </properties>
+        </profile>
+
+        <!-- mac profile has to be after unix since running on mac will trigger both -->
+        <profile>
+            <id>mac</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <properties>
+                <!-- absolute path -->
+                <!--<rt.jar.path>/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Classes/classes.jar</rt .jar.path> -->
+                <!-- or with JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home/ -->
+                <rt.jar.path>${java.home}/../Classes/classes.jar</rt.jar.path>
+                <jsse.jar.path>${java.home}/../Classes/jsse.jar</jsse.jar.path>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <rt.jar.path>${java.home}/lib/rt.jar</rt.jar.path>
+                <jsse.jar.path>${java.home}/lib/jsse.jar</jsse.jar.path>
+            </properties>
+        </profile>
+    </profiles>
+</project>
