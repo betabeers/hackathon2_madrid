@@ -1,0 +1,2 @@
+Remove application title
+Use Roboto font
