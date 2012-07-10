@@ -24,6 +24,11 @@ Temática: ocio y descuentos, patrocinan yunait y mailjet.
 * Descripción: Sticky offers, ofertas por qr y gincana
 * Autores: Arturo Herrero, Marcin Grvszko y David Molinero
 
+## MyYunaitDeals
+
+* Descripción: invitar amigos a los planes de yunait mediante facebook
+* Autores: Enrique Sanchis, Francisco Sevillano y Jorge Luis Arevalo de Soto
+
 ## Cumplenaitjet
 
 * Descripción: App de facebook de recordatorios de cumpleaños con aviso por email de ofertas de yunait.
