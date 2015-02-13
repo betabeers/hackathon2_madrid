@@ -4,6 +4,7 @@ Temática: ocio y descuentos, patrocinan yunait y mailjet.
 
 ## Yunaitfication
 
+
 * Descripción: Gamisfacción de ofertas en yunait.
 * Autores: Alejandro Perezpaya, Saul Diaz Gonzalez, Alejandro Rodriguez
 
